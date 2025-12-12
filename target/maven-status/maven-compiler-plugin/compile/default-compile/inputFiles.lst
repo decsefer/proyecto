@@ -1,6 +1,10 @@
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\AdministracionEventosApplication.java
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\core\domain\Asistente.java
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\core\domain\Evento.java
+C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\asistente\controller\AsistenteController.java
+C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\asistente\repository\AsistenteRepository.java
+C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\asistente\service\AsistenteService.java
+C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\asistente\service\impl\AsistenteServiceImpl.java
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\evento\controller\EventoController.java
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\evento\repository\EventoRepository.java
 C:\Users\chequ\Downloads\administracionEventos\administracionEventos\src\main\java\com\ipn\mx\administracioneventos\features\evento\service\EventoService.java
