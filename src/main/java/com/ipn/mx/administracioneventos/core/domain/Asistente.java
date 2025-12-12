@@ -1,5 +1,6 @@
 package com.ipn.mx.administracioneventos.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,33 +18,38 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "asistente", schema = "public")
+@Table(name = "Asistente", schema = "public")
 public class Asistente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAsistente;
 
-
-    @NotBlank(message = "no debe estar en blanco")
-    @Size(min = 2, max = 50)
-    @Column(name = "nombre", length = 50, nullable = false)
+    @NotBlank(message = "No puede estar en blnco")
+    @Size(min = 2, max = 50, message = "El valor debera estar entre 2 y 50")
+    @Column(name = "nombre",length = 50, nullable = false)
     private String nombre;
 
-    @Size(min = 2, max = 50)
-    @Column(name = "paterno", length = 50, nullable = false)
+    @Column(name = "paterno",length = 50, nullable = false)
     private String paterno;
-
-    @Size(min = 2, max = 50)
-    @Column(name = "materno", length = 50, nullable = false)
+    @Size(min = 2, max = 50, message = "El valor debera estar entre 2 y 50")
+    @Column(name = "materno",length = 50, nullable = false)
+    @Size(min = 2, max = 50, message = "El valor debera estar entre 2 y 50")
     private String materno;
 
-    @Email(message = "escibre un correo valido")
-    @Column(name = "email", length = 100, nullable = false)
+    @Email(message = "Escribe un correo electronico valido")
+    @Column(name = "email",length = 150, nullable = false)
     private String email;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fechaRegistro", nullable = false)
     private Date fechaRegistro;
 
+    @ManyToOne
+    @JoinColumn(name = "idEvento", nullable = false)
+    @JsonBackReference
+    private Evento evento;
+
+
+    //Codificar para que cuando se registre un asistente le llegue un correo
 }

@@ -16,31 +16,40 @@ import java.util.List;
 public class EventoServiceImpl implements EventoService {
     @Override
     public List<Evento> findAll() {
-        return List.of();
+        return eventoRepository.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Evento findById(Long id) {
-        return null;
+        return eventoRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public Evento save(Evento evento) {
-        return null;
+        return eventoRepository.save(evento);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-
+        eventoRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ByteArrayInputStream reportePDF(List<Evento> listaeventos) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("REPORTE DE EVENTOS\n");
+        for (Evento ev : listaeventos) {
+            sb.append(ev.getIdEvento()).append(" | ")
+              .append(ev.getNombreEvento()).append(" | ")
+              .append(ev.getDescripcionEvento()).append(" | ")
+              .append(ev.getFechaInicio()).append(" -> ")
+              .append(ev.getFechaFin()).append("\n");
+        }
+        return new ByteArrayInputStream(sb.toString().getBytes());
     }
 
     @Autowired
