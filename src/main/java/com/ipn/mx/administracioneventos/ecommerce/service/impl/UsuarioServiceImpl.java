@@ -15,6 +15,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario registrar(Usuario u) {
+        if (repo.findByEmail(u.getEmail()).isPresent()) {
+            throw new IllegalStateException("Email ya registrado");
+        }
         return repo.save(u);
     }
 
@@ -44,4 +47,3 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repo.findAll();
     }
 }
-
