@@ -33,6 +33,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto crear(Producto p) {
+        if (p.getNombre() != null && repo.findByNombre(p.getNombre()).isPresent()) {
+            throw new IllegalStateException("Producto duplicado");
+        }
         return repo.save(p);
     }
 
@@ -40,6 +43,12 @@ public class ProductoServiceImpl implements ProductoService {
     public Producto actualizar(Long id, Producto p) {
         Producto x = repo.findById(id).orElse(null);
         if (x == null) return null;
+        if (p.getNombre() != null) {
+            var existente = repo.findByNombre(p.getNombre());
+            if (existente.isPresent() && !existente.get().getIdProducto().equals(id)) {
+                throw new IllegalStateException("Producto duplicado");
+            }
+        }
         x.setNombre(p.getNombre());
         x.setPrecio(p.getPrecio());
         x.setStock(p.getStock());
@@ -60,4 +69,3 @@ public class ProductoServiceImpl implements ProductoService {
         repo.deleteById(id);
     }
 }
-
