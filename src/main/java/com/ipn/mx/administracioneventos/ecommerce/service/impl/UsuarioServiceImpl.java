@@ -3,6 +3,7 @@ package com.ipn.mx.administracioneventos.ecommerce.service.impl;
 import com.ipn.mx.administracioneventos.ecommerce.domain.Usuario;
 import com.ipn.mx.administracioneventos.ecommerce.repository.UsuarioRepository;
 import com.ipn.mx.administracioneventos.ecommerce.service.UsuarioService;
+import com.ipn.mx.administracioneventos.util.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,26 @@ import java.util.List;
 public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository repo;
+    @Autowired(required = false)
+    private EmailService emailService;
 
     @Override
     public Usuario registrar(Usuario u) {
         if (repo.findByEmail(u.getEmail()).isPresent()) {
             throw new IllegalStateException("Email ya registrado");
         }
-        return repo.save(u);
+        Usuario creado = repo.save(u);
+        if (emailService != null && creado.getEmail() != null && !creado.getEmail().isEmpty()) {
+            try {
+                emailService.sendEmail(
+                        creado.getEmail(),
+                        "Confirmación de cuenta",
+                        "Tu cuenta ha sido registrada exitosamente."
+                );
+            } catch (RuntimeException ignored) {
+            }
+        }
+        return creado;
     }
 
     @Override
