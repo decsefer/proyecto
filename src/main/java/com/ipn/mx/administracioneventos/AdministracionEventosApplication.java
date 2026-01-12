@@ -18,10 +18,11 @@ public class AdministracionEventosApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200", "https://proyecto-z9eq.onrender.com", "https://proyecto-angularfin.netlify.app")
+                registry.addMapping("/**")
+                        .allowedOriginPatterns("http://localhost:*", "https://*.onrender.com", "https://*.netlify.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
+                        .exposedHeaders("Content-Disposition")
                         .allowCredentials(true)
                         .maxAge(3600);
             }

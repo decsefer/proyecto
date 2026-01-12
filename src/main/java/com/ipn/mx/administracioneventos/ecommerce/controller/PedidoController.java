@@ -4,10 +4,12 @@ import com.ipn.mx.administracioneventos.ecommerce.domain.Pedido;
 import com.ipn.mx.administracioneventos.ecommerce.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200", "https://proyecto-z9eq.onrender.com", "https://proyecto-angularfin.netlify.app"}, allowCredentials = "true")
 @RequestMapping("/api/v1/pedidos")
 public class PedidoController {
     @Autowired
@@ -34,8 +36,11 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoService.total(id));
     }
 
-    @GetMapping(value = "/{id}/factura", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/{id}/factura", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> factura(@PathVariable Long id) {
-        return ResponseEntity.ok(pedidoService.factura(id));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=factura_" + id + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pedidoService.factura(id));
     }
 }

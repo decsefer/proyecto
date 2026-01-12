@@ -1,5 +1,5 @@
 # Etapa 1: build con Maven Wrapper
-FROM eclipse-temurin:23-jdk-alpine AS build
+FROM eclipse-temurin:17-jdk-alpine AS build
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY src ./src
 RUN ./mvnw -q -B clean package -DskipTests
 
 # Etapa 2: runtime, solo el JAR resultante
-FROM eclipse-temurin:23-jdk-alpine
+FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
