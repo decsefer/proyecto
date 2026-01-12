@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.beans.factory.annotation.Value;
 
 
 
 @Service
+@ConditionalOnProperty(name = {"spring.mail.host","spring.mail.username","spring.mail.password"})
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
