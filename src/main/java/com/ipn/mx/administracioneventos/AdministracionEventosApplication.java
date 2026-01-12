@@ -23,8 +23,8 @@ public class AdministracionEventosApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200", "https://proyecto-z9eq.onrender.com")
-                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                        .allowedOrigins("http://localhost:4200", "https://proyecto-z9eq.onrender.com", "https://proyecto-angularfin.netlify.app")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true)
                         .maxAge(3600);
