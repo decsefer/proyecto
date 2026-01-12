@@ -10,12 +10,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 
 
 
 @Service
-@ConditionalOnProperty(name = {"spring.mail.host","spring.mail.username","spring.mail.password"})
+@ConditionalOnProperty(name = "spring.mail.host")
+@ConditionalOnExpression("('${spring.mail.username:}' != '' and '${spring.mail.password:}' != '')")
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
