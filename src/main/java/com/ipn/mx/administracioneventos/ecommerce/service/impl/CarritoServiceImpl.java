@@ -48,14 +48,24 @@ public class CarritoServiceImpl implements CarritoService {
     public Carrito agregarProducto(Long idUsuario, Long idProducto, Integer cantidad) {
         Carrito c = obtenerOCrear(idUsuario);
         Producto p = productoRepo.findById(idProducto).orElseThrow();
-        CarritoItem item = CarritoItem.builder()
-                .carrito(c)
-                .producto(p)
-                .cantidad(cantidad)
-                .precioUnitario(p.getPrecio())
-                .subtotal(p.getPrecio().multiply(BigDecimal.valueOf(cantidad)))
-                .build();
-        itemRepo.save(item);
+        var existente = itemRepo.findByCarrito_IdCarritoAndProducto_IdProducto(c.getIdCarrito(), idProducto);
+        if (existente.isPresent()) {
+            CarritoItem i = existente.get();
+            int nueva = i.getCantidad() + cantidad;
+            i.setCantidad(nueva);
+            i.setPrecioUnitario(p.getPrecio());
+            i.setSubtotal(p.getPrecio().multiply(BigDecimal.valueOf(nueva)));
+            itemRepo.save(i);
+        } else {
+            CarritoItem item = CarritoItem.builder()
+                    .carrito(c)
+                    .producto(p)
+                    .cantidad(cantidad)
+                    .precioUnitario(p.getPrecio())
+                    .subtotal(p.getPrecio().multiply(BigDecimal.valueOf(cantidad)))
+                    .build();
+            itemRepo.save(item);
+        }
         return carritoRepo.findById(c.getIdCarrito()).orElseThrow();
     }
 
@@ -63,10 +73,7 @@ public class CarritoServiceImpl implements CarritoService {
     @Transactional
     public Carrito eliminarProducto(Long idUsuario, Long idProducto) {
         Carrito c = obtenerOCrear(idUsuario);
-        c.getItems().stream()
-                .filter(i -> i.getProducto().getIdProducto().equals(idProducto))
-                .findFirst()
-                .ifPresent(i -> itemRepo.deleteById(i.getId()));
+        itemRepo.deleteByCarrito_IdCarritoAndProducto_IdProducto(c.getIdCarrito(), idProducto);
         return carritoRepo.findById(c.getIdCarrito()).orElseThrow();
     }
 
@@ -74,7 +81,7 @@ public class CarritoServiceImpl implements CarritoService {
     @Transactional
     public Carrito vaciar(Long idUsuario) {
         Carrito c = obtenerOCrear(idUsuario);
-        c.getItems().forEach(i -> itemRepo.deleteById(i.getId()));
+        itemRepo.deleteByCarrito_IdCarrito(c.getIdCarrito());
         return carritoRepo.findById(c.getIdCarrito()).orElseThrow();
     }
 
@@ -87,4 +94,3 @@ public class CarritoServiceImpl implements CarritoService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
-
