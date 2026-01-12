@@ -27,6 +27,10 @@ public class AdministracionEventosApplication {
                         .allowCredentials(true)
                         .maxAge(3600);
             }
+            @Override
+            public void addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry registry) {
+                registry.addRedirectViewController("/documentacion/swagger-ui.html", "/documentacion");
+            }
         };
     }
 

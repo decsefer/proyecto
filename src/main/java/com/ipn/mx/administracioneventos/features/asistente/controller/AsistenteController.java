@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(originPatterns = {"http://localhost:*", "https://*.onrender.com", "https://*.netlify.app"})
 @RestController
 @RequestMapping("/api/v1")
 public class AsistenteController {

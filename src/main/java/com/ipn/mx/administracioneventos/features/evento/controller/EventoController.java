@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = {"http://localhost:8080", "https://*.onrender.com", "https://*.netlify.app"})
 @RestController
 @RequestMapping("/api/v1/eventos")
 
